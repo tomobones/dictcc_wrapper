@@ -1,5 +1,5 @@
 # DICT.CC Terminal Client
 
 ## Functionality
-- display vocabulary
-- save chosen vocabulary in one of your vocabulary lists
+- search for specific vocabulary
+- save chosen entries in one of your vocabulary lists

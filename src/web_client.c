@@ -28,7 +28,7 @@ size_t data_handler_search(char* buffer, size_t itemsize, size_t nitems, void* i
 
 // login
 //
-//pw=pass2dict
+//pw=XXXXXX
 //url=https://secure.dict.cc/users/urc_logn.php
 //#cred="is_utf8=1&hinz=voggo&kunz=$pw&ref=https://www.dict.cc/"
 //cred="hinz=voggo&kunz=$pw"

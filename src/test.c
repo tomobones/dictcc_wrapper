@@ -93,4 +93,5 @@ void test_data_center (void) {
 
 void test_web_client (void) {
     scrape_vocabs_for_search("deen", "Schrank");
+    web_client_clean_up();
 }

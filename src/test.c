@@ -19,7 +19,7 @@ void id_exists(int id) {
 void test_data_center (void) {
     
     // vocab methods
-    vocab_data data1;
+    vocab_data_t data1;
     data1.nr = 1;
     data1.id = 123456;
     strcpy(data1.vl, "Hallo!");
@@ -27,7 +27,7 @@ void test_data_center (void) {
     if (!vocab_add(&data1))
         printf("Data with id '%d' already exists", data1.id);
     
-    vocab_data data2;
+    vocab_data_t data2;
     data2.nr = 2;
     data2.id = 234567;
     strcpy(data2.vl, "Alligator");
@@ -35,7 +35,7 @@ void test_data_center (void) {
     if (!vocab_add(&data2))
         printf("Data with id '%d' already exists", data2.id);
 
-    vocab_data data3;
+    vocab_data_t data3;
     data3.nr = 3;
     data3.id = 345678;
     strcpy(data3.vl, "Französisch");
@@ -49,7 +49,7 @@ void test_data_center (void) {
     id_exists(238567);
 
     int nr = 3;
-    vocab_data *avail_data1 = vocab_for_nr(nr);
+    vocab_data_t *avail_data1 = vocab_for_nr(nr);
     if (avail_data1 == NULL) {
         printf("Coudn't retrieve data with nr '%d'.\n", nr);
     } else {
@@ -59,21 +59,21 @@ void test_data_center (void) {
     vocab_clean_up();
     
     // voclst methods
-    voclst_data lstdata1;
+    voclst_data_t lstdata1;
     lstdata1.nr = 1;
     lstdata1.id = 1999;
     strcpy(lstdata1.name, "english_list");
     if(!voclst_add(&lstdata1))
         printf("Data with id '%d' already exists", lstdata1.id);
 
-    voclst_data lstdata2;
+    voclst_data_t lstdata2;
     lstdata2.nr = 2;
     lstdata2.id = 2999;
     strcpy(lstdata2.name, "french_list");
     if(!voclst_add(&lstdata2))
         printf("Data with id '%d' already exists", lstdata2.id);
 
-    voclst_data lstdata3;
+    voclst_data_t lstdata3;
     lstdata3.nr = 3;
     lstdata3.id = 3999;
     strcpy(lstdata3.name, "japanese_list");
@@ -83,7 +83,7 @@ void test_data_center (void) {
     voclst_print_all();
 
     int lnr = 3;
-    voclst_data *avail_ldata1 = voclst_for_nr(lnr);
+    voclst_data_t *avail_ldata1 = voclst_for_nr(lnr);
     if (avail_ldata1 == NULL) {
         printf("Coudn't retrieve list with nr '%d'.\n", lnr);
     } else {

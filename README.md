@@ -1,8 +1,9 @@
 # DICT.CC Terminal Client
 
-## Status
-- still no functionality yet (2021-03-27)
+## Status 2021-03-30
+- Search functioning
+- No UI via ncurses yet
 
 ## Aimed Functionality
-- search for specific vocabulary on [dict.cc](https://dict.cc)
-- save chosen entries in one of your vocabulary lists
+- Search for specific vocabulary on [dict.cc](https://dict.cc)
+- Save chosen entries in one of your vocabulary lists

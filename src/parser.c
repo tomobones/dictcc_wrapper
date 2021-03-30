@@ -23,9 +23,6 @@ typedef struct SubstrPos {
 void pos_of_match_in_html(substr_pos_t *pos, regex_t *rx, char *html_data);
 void add_next_vocab(vocab_data_t *vocab_to_add, substr_pos_t *pos_id, substr_pos_t *pos_vl, substr_pos_t *pos_vr, char *html);
 
-void print_str_from_to(char *string, int from, int to);
-
-
 // ________________________________________________________________
 // public methods - implementation
 
@@ -97,6 +94,10 @@ bool parse_vocabs_from_html(char* html) {
     return true;
 }
 
+void parse_vocablists_for_html(char* html) {
+    // todo
+}
+
 // ________________________________________________________________
 // private methods - implementation
 
@@ -109,9 +110,4 @@ void pos_of_match_in_html(substr_pos_t *pos, regex_t *rx, char *html_data) {
         pos->start = 0;
         pos->end = 0;
     }
-}
-
-void print_str_from_to(char *string, int from, int to) {
-    for (int i = from; i < to; i++) putchar(string[i]);
-    printf("\n");
 }

@@ -4,6 +4,11 @@
 #include <string.h>
 #include "data_center.h"
 
+
+
+// ________________________________________________________________
+// private variables
+
 // vocab node struct
 struct vn {
     vocab_data_t* vocab;
@@ -26,7 +31,18 @@ vocab_node_t *final_vnode = NULL;
 voclst_node_t *init_lnode = NULL;
 voclst_node_t *final_lnode = NULL;
 
-// public methods - vocabs
+
+
+// ________________________________________________________________
+// private methods - declarations
+
+bool vocab_exists (int id);
+bool voclst_exists (int id);
+
+
+
+// ________________________________________________________________
+// public methods - implementations - vocabs
 
 bool vocab_add (const vocab_data_t *data) {
 
@@ -89,7 +105,8 @@ void vocab_print_all (void) {
     }
 }
 
-// public methods - voclists
+// ________________________________________________________________
+// public methods - implementations - voclists
 
 bool voclst_add (const voclst_data_t *data) {
 
@@ -150,7 +167,8 @@ void voclst_print_all (void) {
     }
 }
 
-// private methods
+// ________________________________________________________________
+// private methods - implementations
 
 bool vocab_exists (int id) {
     vocab_node_t *node = init_vnode;

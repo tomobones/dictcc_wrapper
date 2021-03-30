@@ -12,7 +12,7 @@ struct vd {
     char vr[BUFFER_VOCAB_SIZE];
     bool is_marked;
 };
-typedef struct vd vocab_data;
+typedef struct vd vocab_data_t;
 
 struct ld {
     int nr;
@@ -20,18 +20,18 @@ struct ld {
     char name[BUFFER_VOCAB_SIZE];
     bool is_marked;
 };
-typedef struct ld voclst_data;
+typedef struct ld voclst_data_t;
 
 // vocab methods
-bool vocab_add(const vocab_data *data);
-vocab_data* vocab_for_nr(int nr);
+bool vocab_add(const vocab_data_t *data);
+vocab_data_t* vocab_for_nr(int nr);
 void vocab_clean_up(void);
 void vocab_print_all(void);
 bool vocab_exists(int id);
 
 // voclist methods
-bool voclst_add(const voclst_data *data);
-voclst_data* voclst_for_nr(int nr);
+bool voclst_add(const voclst_data_t *data);
+voclst_data_t* voclst_for_nr(int nr);
 void voclst_clean_up(void);
 void voclst_print_all(void);
 bool voclst_exists(int id);

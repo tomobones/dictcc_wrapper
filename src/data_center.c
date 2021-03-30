@@ -6,35 +6,35 @@
 
 // vocab node struct
 struct vn {
-    vocab_data* vocab;
+    vocab_data_t* vocab;
     struct vn* next;
 };
-typedef struct vn vocab_node;
+typedef struct vn vocab_node_t;
 
 // voclst node struct
 struct ln {
-    voclst_data* voclst;
+    voclst_data_t* voclst;
     struct ln* next;
 };
-typedef struct ln voclst_node;
+typedef struct ln voclst_node_t;
 
 // vacab linked list
-vocab_node *init_vnode = NULL;
-vocab_node *final_vnode = NULL;
+vocab_node_t *init_vnode = NULL;
+vocab_node_t *final_vnode = NULL;
 
 // vaclst linked list
-voclst_node *init_lnode = NULL;
-voclst_node *final_lnode = NULL;
+voclst_node_t *init_lnode = NULL;
+voclst_node_t *final_lnode = NULL;
 
 // public methods - vocabs
 
-bool vocab_add (const vocab_data *data) {
+bool vocab_add (const vocab_data_t *data) {
 
     // query existence
     if (vocab_exists(data->id)) return false;
 
     // create new data
-    vocab_data* pvocab = (vocab_data*)malloc(sizeof(vocab_data));
+    vocab_data_t* pvocab = (vocab_data_t*)malloc(sizeof(vocab_data_t));
     pvocab->nr = data->nr;
     pvocab->id = data->id;
     strcpy(pvocab->vl, data->vl);
@@ -42,7 +42,7 @@ bool vocab_add (const vocab_data *data) {
     pvocab->is_marked = false;
 
     // create new node
-    vocab_node* pnewnode = (vocab_node*)malloc(sizeof(vocab_node));
+    vocab_node_t* pnewnode = (vocab_node_t*)malloc(sizeof(vocab_node_t));
     pnewnode->next = NULL;
     pnewnode->vocab = pvocab;
 
@@ -56,8 +56,8 @@ bool vocab_add (const vocab_data *data) {
     return true;
 }
 
-vocab_data* vocab_for_nr (int nr) {
-    vocab_node* node = init_vnode;
+vocab_data_t* vocab_for_nr (int nr) {
+    vocab_node_t* node = init_vnode;
     while(node != NULL) {
         if (node->vocab->nr == nr) return node->vocab;
         node = node->next;
@@ -66,8 +66,8 @@ vocab_data* vocab_for_nr (int nr) {
 }
 
 void vocab_clean_up (void) {
-    vocab_node* node = init_vnode;
-    vocab_node* node_next = NULL;
+    vocab_node_t* node = init_vnode;
+    vocab_node_t* node_next = NULL;
 
     while (node != NULL) {
         node_next = node->next;
@@ -78,7 +78,7 @@ void vocab_clean_up (void) {
 }
 
 void vocab_print_all (void) {
-    vocab_node* node = init_vnode;
+    vocab_node_t* node = init_vnode;
     while (node != NULL) {
        printf("%d %d %s %s\n",\
             node->vocab->nr,\
@@ -91,20 +91,20 @@ void vocab_print_all (void) {
 
 // public methods - voclists
 
-bool voclst_add (const voclst_data *data) {
+bool voclst_add (const voclst_data_t *data) {
 
     // query existenc
     if (voclst_exists(data->id)) return false;
 
     // create new data
-    voclst_data* pvoclst = (voclst_data*)malloc(sizeof(voclst_data));
+    voclst_data_t* pvoclst = (voclst_data_t*)malloc(sizeof(voclst_data_t));
     pvoclst->nr = data->nr;
     pvoclst->id = data->id;
     strcpy(pvoclst->name, data->name);
     pvoclst->is_marked = false;
 
     // create new node
-    voclst_node* pnewnode = (voclst_node*)malloc(sizeof(voclst_node));
+    voclst_node_t* pnewnode = (voclst_node_t*)malloc(sizeof(voclst_node_t));
     pnewnode->next = NULL;
     pnewnode->voclst = pvoclst;
 
@@ -118,8 +118,8 @@ bool voclst_add (const voclst_data *data) {
     return true;
 }
 
-voclst_data* voclst_for_nr (int nr) {
-    voclst_node* node = init_lnode;
+voclst_data_t* voclst_for_nr (int nr) {
+    voclst_node_t* node = init_lnode;
     while(node != NULL) {
         if (node->voclst->nr == nr) return node->voclst;
         node = node->next;
@@ -128,8 +128,8 @@ voclst_data* voclst_for_nr (int nr) {
 }
 
 void voclst_clean_up (void) {
-    voclst_node* node = init_lnode;
-    voclst_node* node_next = NULL;
+    voclst_node_t* node = init_lnode;
+    voclst_node_t* node_next = NULL;
 
     while (node != NULL) {
         node_next = node->next;
@@ -140,7 +140,7 @@ void voclst_clean_up (void) {
 }
 
 void voclst_print_all (void) {
-    voclst_node* node = init_lnode;
+    voclst_node_t* node = init_lnode;
     while (node != NULL) {
        printf("%d %d %s\n",\
             node->voclst->nr,\
@@ -153,7 +153,7 @@ void voclst_print_all (void) {
 // private methods
 
 bool vocab_exists (int id) {
-    vocab_node *node = init_vnode;
+    vocab_node_t *node = init_vnode;
     while (node != NULL) {
         if (node->vocab->id == id) return true;
         node = node->next;
@@ -162,7 +162,7 @@ bool vocab_exists (int id) {
 }
 
 bool voclst_exists (int id) {
-    voclst_node *node = init_lnode;
+    voclst_node_t *node = init_lnode;
     while (node != NULL) {
         if (node->voclst->id == id) return true;
         node = node->next;

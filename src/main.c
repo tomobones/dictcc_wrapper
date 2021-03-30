@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
     
     // get url
     char url[128];
-    url_for_search_and_lang(url, "Auto", NULL);
+    url_for_search_and_lang(url, argv[1], NULL);
 
     // get html data
     struct MemoryStruct memory;
@@ -21,6 +21,10 @@ int main(int argc, char** argv) {
 
     // parse data
     parse_vocabs_from_html(memory.buffer);
+
+    // print data
+    vocab_print_all();
+    vocab_clean_up();
 
     // clean up
     free(memory.buffer);

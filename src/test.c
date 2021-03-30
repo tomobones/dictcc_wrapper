@@ -4,6 +4,8 @@
 
 #include "data_center.h"
 #include "web_client.h"
+#include "url_manager.h"
+#include "exit_err.h"
 #include "test.h"
 
 void id_exists(int id) {
@@ -91,7 +93,12 @@ void test_data_center (void) {
     voclst_clean_up();
 }
 
+void test_url_manager (void) {
+
+
+}
+
 void test_web_client (void) {
-    scrape_vocabs_for_search("deen", "Schrank");
-    web_client_clean_up();
+    //scrape_vocabs_for_search("deen", "Schrank");
+    //web_client_clean_up();
 }

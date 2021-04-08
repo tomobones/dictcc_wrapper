@@ -2,7 +2,7 @@
 
 ## Status 2021-04-08
 - Search functioning
-- simple UI via ncurses functioning
+- Simple UI via ncurses functioning
 
 ## Aimed Functionality
 - Search for specific vocabulary on [dict.cc](https://dict.cc)

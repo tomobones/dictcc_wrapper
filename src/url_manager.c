@@ -8,6 +8,6 @@
 
 bool url_for_search_and_lang(char* url, char* search, char* lang) {
     if (search == NULL || url == NULL) return false;
-    sprintf(url, URL_SEARCH, LANG_DEFAULT, search);
+    sprintf(url, URL_SEARCH, (lang == NULL) ? LANG_DEFAULT : lang, search);
     return true;
 }

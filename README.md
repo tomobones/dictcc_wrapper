@@ -1,4 +1,4 @@
-# DICT.CC Terminal Client
+# dict.cc terminal client
 
 ## Status 2021-04-08
 - Search functioning

@@ -1,5 +1,5 @@
-#ifndef _DATA_CENTER_H_
-#define _DATA_CENTER_H_
+#ifndef DATA_CENTER_H
+#define DATA_CENTER_H
 
 #include <stdbool.h>
 

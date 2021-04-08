@@ -1,5 +1,5 @@
-#ifndef _WEB_CLIENT_H_
-#define _WEB_CLIENT_H_
+#ifndef WEB_CLIENT_H
+#define WEB_CLIENT_H
 
 struct MemoryStruct {
     char *buffer;

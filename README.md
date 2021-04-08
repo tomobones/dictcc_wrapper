@@ -1,8 +1,8 @@
 # DICT.CC Terminal Client
 
-## Status 2021-03-30
+## Status 2021-04-08
 - Search functioning
-- No UI via ncurses yet
+- simple UI via ncurses functioning
 
 ## Aimed Functionality
 - Search for specific vocabulary on [dict.cc](https://dict.cc)

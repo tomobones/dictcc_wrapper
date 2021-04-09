@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <stdbool.h>
+#include <locale.h>
 
 #include "user_interface.h"
 #include "data_center.h"
@@ -10,6 +11,7 @@
 // public methods - implementations - vocabs
 
 void init_ui(void) {
+    setlocale(LC_ALL, "");
     initscr();
 }
 
@@ -28,6 +30,8 @@ void display_vocabs(void) {
         printw(" %s\n", vocab->vr);
         vocab = vocab_for_nr(++vocab_number);
     }
+    attrset(A_NORMAL);
+    printw("\nPress any key...");
 
     refresh();
     getchar();

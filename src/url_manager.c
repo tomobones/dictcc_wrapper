@@ -8,7 +8,7 @@
 #define URL_SEARCH "https://%s.dict.cc/?s=%s"
 
 bool is_valid_lang_code (const char* lang) {
-    if (sizeof(lang) != 4) return false;
+    if (lang[4] != '\0') return false;
     if ((lang[0] == 'd' && lang[1] == 'e') ||\
         (lang[0] == 'e' && lang[1] == 'n') ||\
         (lang[2] == 'd' && lang[3] == 'e') ||\

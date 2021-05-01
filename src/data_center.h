@@ -22,17 +22,18 @@ struct ld {
 };
 typedef struct ld voclst_data_t;
 
+// general methods
+void data_clean_up(void);
+
 // vocab methods
 bool vocab_add(const vocab_data_t *data);
 vocab_data_t* vocab_for_nr(int nr);
-void vocab_clean_up(void);
 void vocab_print_all(void);
 bool vocab_exists(int id);
 
 // voclist methods
 bool voclst_add(const voclst_data_t *data);
 voclst_data_t* voclst_for_nr(int nr);
-void voclst_clean_up(void);
 void voclst_print_all(void);
 bool voclst_exists(int id);
 

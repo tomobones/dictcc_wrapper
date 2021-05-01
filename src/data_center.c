@@ -38,8 +38,18 @@ voclst_node_t *final_lnode = NULL;
 
 bool vocab_exists (int id);
 bool voclst_exists (int id);
+void vocab_clean_up (void);
+void voclst_clean_up (void);
 
 
+
+// ________________________________________________________________
+// public methods - implementations - general
+
+void data_clean_up(void) {
+    vocab_clean_up();
+    voclst_clean_up();
+}
 
 // ________________________________________________________________
 // public methods - implementations - vocabs
@@ -79,18 +89,6 @@ vocab_data_t* vocab_for_nr (int nr) {
         node = node->next;
     }
     return NULL;;
-}
-
-void vocab_clean_up (void) {
-    vocab_node_t* node = init_vnode;
-    vocab_node_t* node_next = NULL;
-
-    while (node != NULL) {
-        node_next = node->next;
-        free(node->vocab);
-        free(node);
-        node = node_next; 
-    }
 }
 
 void vocab_print_all (void) {
@@ -144,17 +142,6 @@ voclst_data_t* voclst_for_nr (int nr) {
     return NULL;;
 }
 
-void voclst_clean_up (void) {
-    voclst_node_t* node = init_lnode;
-    voclst_node_t* node_next = NULL;
-
-    while (node != NULL) {
-        node_next = node->next;
-        free(node->voclst);
-        free(node);
-        node = node_next; 
-    }
-}
 
 void voclst_print_all (void) {
     voclst_node_t* node = init_lnode;
@@ -186,4 +173,28 @@ bool voclst_exists (int id) {
         node = node->next;
     }
     return false;
+}
+
+void vocab_clean_up (void) {
+    vocab_node_t* node = init_vnode;
+    vocab_node_t* node_next = NULL;
+
+    while (node != NULL) {
+        node_next = node->next;
+        free(node->vocab);
+        free(node);
+        node = node_next; 
+    }
+}
+
+void voclst_clean_up (void) {
+    voclst_node_t* node = init_lnode;
+    voclst_node_t* node_next = NULL;
+
+    while (node != NULL) {
+        node_next = node->next;
+        free(node->voclst);
+        free(node);
+        node = node_next; 
+    }
 }

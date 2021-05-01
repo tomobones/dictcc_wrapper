@@ -41,11 +41,21 @@ char *test_vocab_add_redundancy(void) {
     return 0;
 }
 
+char *test_vocab_exists(void) {
+    int id = 234567;
+    int id_not = 334567;
+    mu_assert("vocab_exists: for existing id should return true", vocab_exists(id));
+    mu_assert("vocab_exists: for nonexisting id should return false", !vocab_exists(id_not));
+
+    return 0;
+}
+
 char *test_vocab_for_nr() {
     int id = 234567;
     int number = 1;
     vocab_data_t *data = vocab_for_nr(number);
     mu_assert("vocab_for_nr: shoud return data with adaquate id", data->id == id);
+
     return 0;
 }
 
@@ -61,6 +71,7 @@ char *test_voclst_add(void) {
     lstdata2.id = 2999;
     strcpy(lstdata2.name, "french_list");
     mu_assert("voclst_add: should return true.", voclst_add(&lstdata2));
+
     return 0;
 }
 
@@ -70,15 +81,25 @@ char *test_voclst_add_redundancy(void) {
     lstdata3.id = 1999;
     strcpy(lstdata3.name, "japanese_list");
     mu_assert("voclst_add: redundant id should return false.", !voclst_add(&lstdata3));
+
     return 0;
 }
 
+char *test_voclst_exists(void) {
+    int id = 1999;
+    int id_not = 2000;
+    mu_assert("voclst_exists: for existing id should return true", voclst_exists(id));
+    mu_assert("voclst_exists: for nonexisting id should return false", !voclst_exists(id_not));
+
+    return 0;
+}
 
 char *test_voclst_for_nr(void) {
     int lnr = 2;
     int id = 2999;
     voclst_data_t *data = voclst_for_nr(lnr);
     mu_assert("vocab_for_nr: should return data with adaquate id", data->id == id);
+
     return 0;
 }
 
@@ -86,51 +107,22 @@ char *all_tests() {
     mu_run_test(test_vocab_add);
     mu_run_test(test_vocab_add_redundancy);
     mu_run_test(test_vocab_for_nr);
+    mu_run_test(test_vocab_exists);
 
     mu_run_test(test_voclst_add);
     mu_run_test(test_voclst_add_redundancy);
     mu_run_test(test_voclst_for_nr);
+    mu_run_test(test_voclst_exists);
+
     data_clean_up();
     return 0;
 }
 
-
-int main(void) {
+int main(int argc, char** argv) {
+    printf("\nTest: %s\n", argv[0]);
     char *test_message = all_tests();
-    if (test_message != 0) printf("\nTest failed. Msg: %s\n", test_message);
-    else printf("\nAll tests passed! (%i total test%c)\n", tests_run, (tests_run==1)?0:'s');
+    if (test_message != 0) printf("Test failed. Msg: %s\n", test_message);
+    else printf("All tests in passed! (%i total test%c)\n\n", tests_run, (tests_run==1)?0:'s');
+
+    return 0;
 }
-/*
-struct vd {
-    int nr;
-    int id;
-    char vl[BUFFER_VOCAB_SIZE];
-    char vr[BUFFER_VOCAB_SIZE];
-    bool is_marked;
-};
-typedef struct vd vocab_data_t;
-
-struct ld {
-    int nr;
-    int id;
-    char name[BUFFER_VOCAB_SIZE];
-    bool is_marked;
-};
-
-typedef struct ld voclst_data_t;
-*/
-
-// general methods
-//void data_clean_up(void);
-
-// vocab methods
-//bool vocab_add(const vocab_data_t *data);
-//vocab_data_t* vocab_for_nr(int nr);
-//void vocab_print_all(void);
-//bool vocab_exists(int id);
-
-// voclist methods
-//bool voclst_add(const voclst_data_t *data);
-//voclst_data_t* voclst_for_nr(int nr);
-//void voclst_print_all(void);
-//bool voclst_exists(int id);

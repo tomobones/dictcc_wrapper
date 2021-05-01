@@ -4,7 +4,7 @@
 - 'ncurses' for UI
 - 'curl' for html requests
 - 'regex' for pattern search in html data
-- [minUnit](http://www.jera.com/techinfo/jtns/jtn002.html#Source_Code) for minimal unit testing
+- [minUnit](http://www.jera.com/techinfo/jtns/jtn002.html) for minimal unit testing
 
 ## Aimed Functionality
 - Search for specific vocabulary on [dict.cc](https://dict.cc)

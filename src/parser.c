@@ -6,7 +6,7 @@
 
 #include "data_center.h"
 #include "parser.h"
-#include "exit_err.h"
+#include "err_exit.h"
 
 
 // ________________________________________________________________

@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include "web_client.h"
-#include "exit_err.h"
+#include "err_exit.h"
 
 #define LANG_DEFAULT "deen"
 #define URL_SEARCH "https://%s.dict.cc/?s=%s"
@@ -36,9 +36,9 @@ void get_data_from_url(struct MemoryStruct *webdata, char *url) {
     char errbuffer[BUFFER_ERROR];
     webdata->size = 0;
     webdata->buffer = malloc(1);
-    if (webdata->buffer == NULL) exit_err("Couldn't alloc var 'data.buffer' in 'web_client.c'");
+    if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'");
     CURL *curl_handle = curl_easy_init();
-    if (!curl_handle) exit_err("Coudn't initialize curl handle.");
+    if (!curl_handle) err_exit("Coudn't initialize curl handle.");
 
     // curl - set options
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);
@@ -47,7 +47,7 @@ void get_data_from_url(struct MemoryStruct *webdata, char *url) {
     curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errbuffer);
 
     // curl - retrieve data
-    if (curl_easy_perform(curl_handle) != CURLE_OK) exit_err(errbuffer);
+    if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
 
     // curl - cleanup
     curl_easy_cleanup(curl_handle);
@@ -61,7 +61,7 @@ const size_t data_handler_search(char* buffer, size_t itemsize, size_t nitems, v
      
     struct MemoryStruct *data = (struct MemoryStruct *) mem_data;
     data->buffer = realloc(data->buffer, data->size + nbytes + 1);
-    if (data->buffer == NULL) exit_err("realloc() of MemoryStruct data.");
+    if (data->buffer == NULL) err_exit("realloc() of MemoryStruct data.");
     memcpy(data->buffer + data->size, buffer, nbytes);
     data->size += nbytes;
     data->buffer[data->size] = 0;

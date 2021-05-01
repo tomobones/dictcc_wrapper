@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 
 #include "minunit.h"
 #include "../src/data_center.h"
@@ -8,26 +8,97 @@
 int tests_run = 0;
 
 char *test_vocab_add(void) {
-    vocab_data_t data;
-    data.nr = 1;
-    data.id = 1;
-    strcpy(data.vl, "hello");
-    strcpy(data.vr, "Hallo");
-    data.is_marked = false;
+    vocab_data_t *data1 = (vocab_data_t*) malloc(sizeof(vocab_data_t));;
+    data1->nr = 1;
+    data1->id = 234567;
+    strcpy(data1->vl, "hello");
+    strcpy(data1->vr, "Hallo");
+    data1->is_marked = false;
     
-    mu_assert("vacab_add: should return true", vocab_add(&data));
+    mu_assert("vocab_add: added 1st vocab, should return true", vocab_add(data1));
+
+    vocab_data_t *data2 = (vocab_data_t*) malloc(sizeof(vocab_data_t));;
+    data2->nr = 2;
+    data2->id = 234568;
+    strcpy(data2->vl, "hello");
+    strcpy(data2->vr, "Hallo");
+    data2->is_marked = false;
+
+    mu_assert("vocab_add: added 2nd vocab, should return true", vocab_add(data2));
+
+    return 0;
+}
+
+char *test_vocab_add_redundancy(void) {
+    vocab_data_t *data1 = (vocab_data_t*) malloc(sizeof(vocab_data_t));;
+    data1->nr = 1;
+    data1->id = 234567;
+    strcpy(data1->vl, "hello");
+    strcpy(data1->vr, "Hallo");
+    data1->is_marked = false;
+    mu_assert("vocab_add: redundant id should return false", !vocab_add(data1));
+
+    return 0;
+}
+
+char *test_vocab_for_nr() {
+    int id = 234567;
+    int number = 1;
+    vocab_data_t *data = vocab_for_nr(number);
+    mu_assert("vocab_for_nr: shoud return data with adaquate id", data->id == id);
+    return 0;
+}
+
+char *test_voclst_add(void) {
+    voclst_data_t lstdata1; 
+    lstdata1.nr = 1;
+    lstdata1.id = 1999;
+    strcpy(lstdata1.name, "english_list");
+    mu_assert("voclst_add: should return true.", voclst_add(&lstdata1));
+
+    voclst_data_t lstdata2;
+    lstdata2.nr = 2;
+    lstdata2.id = 2999;
+    strcpy(lstdata2.name, "french_list");
+    mu_assert("voclst_add: should return true.", voclst_add(&lstdata2));
+    return 0;
+}
+
+char *test_voclst_add_redundancy(void) {
+    voclst_data_t lstdata3;
+    lstdata3.nr = 3;
+    lstdata3.id = 1999;
+    strcpy(lstdata3.name, "japanese_list");
+    mu_assert("voclst_add: redundant id should return false.", !voclst_add(&lstdata3));
+    return 0;
+}
+
+
+char *test_voclst_for_nr(void) {
+    int lnr = 2;
+    int id = 2999;
+    voclst_data_t *data = voclst_for_nr(lnr);
+    mu_assert("vocab_for_nr: should return data with adaquate id", data->id == id);
     return 0;
 }
 
 char *all_tests() {
     mu_run_test(test_vocab_add);
+    mu_run_test(test_vocab_add_redundancy);
+    mu_run_test(test_vocab_for_nr);
+
+    mu_run_test(test_voclst_add);
+    mu_run_test(test_voclst_add_redundancy);
+    mu_run_test(test_voclst_for_nr);
+    data_clean_up();
     return 0;
 }
 
+
 int main(void) {
     char *test_message = all_tests();
-    if (test_message != 0) printf("Test failed. Msg: %s\n", test_message);
-    else printf("All tests passed! (%i total tests)\n", tests_run);
+    if (test_message != 0) printf("\nTest failed. Msg: %s\n", test_message);
+    else printf("\nAll tests passed! (%i total test%c)\n", tests_run, (tests_run==1)?0:'s');
 }
 /*
 struct vd {

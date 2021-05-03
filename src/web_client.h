@@ -7,5 +7,10 @@ struct MemoryStruct {
 };
 
 void get_data_from_url(struct MemoryStruct *webdata, char *url);
+void get_lists (struct MemoryStruct *webdata);
+void add_vocabs_to_list(int* vocabs, int list);
+
+void open_session(char* user, char* passwd);
+void close_session(void);
 
 #endif

@@ -114,6 +114,7 @@ void parse_voclsts_from_html(char* html) {
         strncpy(voclst_to_add.name,\
                 html + string_offset + matches[2].rm_so,\
                 matches[2].rm_eo - matches[2].rm_so);
+        voclst_to_add.name[matches[2].rm_eo - matches[2].rm_so] = 0;
         voclst_add(&voclst_to_add); 
         string_offset += matches[2].rm_eo;
     }

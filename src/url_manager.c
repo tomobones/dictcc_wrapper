@@ -16,10 +16,10 @@ bool is_valid_lang_code (const char* lang) {
     return false;
 }
 
-void url_for_search_and_lang(char* url, const char* search, const char* lang) {
+void url_search_and_lang(char* url, const char* search, const char* lang) {
     if (search == NULL) err_exit("No valid search string");
     if (url == NULL) err_exit("No valid url");
-    if (!is_valid_lang_code(lang)) err_exit("No valid language code: %s\n", lang);;
+    if (!is_valid_lang_code(lang)) err_exit("No valid language code: %s\n", lang);
     char str[256];
     sprintf(str, URL_SEARCH, lang, search);
     strcpy(url, str);

@@ -21,13 +21,11 @@ typedef struct SubstrPos {
 // private methods - declaration
 
 void pos_of_match_in_html(substr_pos_t *pos, regex_t *rx, char *html_data);
-void add_next_vocab(vocab_data_t *vocab_to_add, substr_pos_t *pos_id, substr_pos_t *pos_vl, substr_pos_t *pos_vr, char *html);
 
 // ________________________________________________________________
 // public methods - implementation
 
 bool parse_vocabs_from_html(char* html) {
-
 
     // set initial positions
     substr_pos_t pos_id, pos_vl, pos_vr;
@@ -53,6 +51,7 @@ bool parse_vocabs_from_html(char* html) {
     substr_pos_t pos_rltv;
     vocab_data_t vocab_to_add;
     vocab_to_add.nr = 0;
+    vocab_to_add.is_marked = false;
 
     char aux_str[16];
     
@@ -94,8 +93,30 @@ bool parse_vocabs_from_html(char* html) {
     return true;
 }
 
-void parse_vocablists_for_html(char* html) {
-    // todo
+void parse_voclsts_from_html(char* html) {
+    //printf("%s\n", html);
+    //return;
+
+    regex_t rx_v;
+    char* pat_v = "my_vocab_lists[[][']x([0-9]*)['][]]=[']([^']*)[']";
+    regcomp(&rx_v, pat_v, REG_EXTENDED);
+    regmatch_t matches[3];
+    voclst_data_t voclst_to_add;
+    voclst_to_add.nr = 0;
+    voclst_to_add.is_marked = false;
+    char aux_str[16];
+    /* int nr; int id; char* name; bool is_marked */
+    long string_offset = 0;
+    while(regexec(&rx_v, html+string_offset, 3, matches, 0) == 0) {
+        voclst_to_add.nr++;
+        strncpy(aux_str, html + string_offset + matches[1].rm_so, matches[1].rm_eo - matches[1].rm_so);
+        voclst_to_add.id = atol(aux_str);
+        strncpy(voclst_to_add.name,\
+                html + string_offset + matches[2].rm_so,\
+                matches[2].rm_eo - matches[2].rm_so);
+        voclst_add(&voclst_to_add); 
+        string_offset += matches[2].rm_eo;
+    }
 }
 
 // ________________________________________________________________

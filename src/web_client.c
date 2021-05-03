@@ -18,7 +18,8 @@
 #define URL_SEARCH "https://%s.dict.cc/?s=%s"
 #define URL_LOGIN "https://secure.dict.cc/users/urc_logn.php"
 #define URL_LOGOUT "https://users.dict.cc/urc_logn.php?logout"
-#define URL_LISTS "https://my.dict.cc/"
+#define URL_LISTS "https://%s.my.dict.cc/"
+#define URL_ADDLST "https://www.dict.cc/mydict/ajax_add_entries_to_list.php?list_id=%s&entry_ids=%s"
 
 #define POST_LENGTH 256
 #define POST_LOGIN "hinz=%s&kunz=%s"
@@ -111,15 +112,17 @@ void close_session(void) {
     remove(FILE_COOKIE);
 }
 
-void get_lists (struct MemoryStruct *webdata) {
+void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
     char errbuffer[BUFFER_ERROR];
+    char url[URL_LENGTH];
+    sprintf(url, URL_LISTS, lang_code);
     webdata->size = 0;
     webdata->buffer = malloc(1);
     if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'");
     CURL *curl_handle = curl_easy_init();
     if (!curl_handle) err_exit("Curl initialization.");                           
                                                                                 
-    curl_easy_setopt(curl_handle, CURLOPT_URL, URL_LISTS);                            
+    curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)webdata);
     curl_easy_setopt(curl_handle, CURLOPT_COOKIEFILE, FILE_COOKIE);            
@@ -131,12 +134,31 @@ void get_lists (struct MemoryStruct *webdata) {
     curl_easy_cleanup(curl_handle);
 }
 
-void add_vocabs_to_list(int* vocabs, int list) {
-    // add to vocab list
-    //vocabids="1451186,719355"
-    //vocablist="840649"
-    //url="https://www.dict.cc/mydict/ajax_add_entries_to_list.php?list_id=$vocablist&entry_ids=$vocabids"
-    //curl -vv --cookie cookies.txt $url
+void add_vocabs_to_list(int* vocab_ids, int list_id) {
+
+    char* vocab_ids_str = "419598,802313"; //Aligator
+    //char* list_id_str = "840649";
+    char* list_id_str = "993949"; //TestEnglish
+
+    char url[URL_LENGTH];
+    sprintf(url, URL_ADDLST, list_id_str, vocab_ids_str);
+    char errbuffer[BUFFER_ERROR];
+    struct MemoryStruct webdata;
+    webdata.size = 0;
+    webdata.buffer = malloc(1);
+    CURL *curl_handle = curl_easy_init();
+    if (!curl_handle) err_exit("Curl initialization.");                           
+                                                                                
+    curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)(&webdata));
+    curl_easy_setopt(curl_handle, CURLOPT_COOKIEFILE, FILE_COOKIE);            
+    curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);                   
+    curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errbuffer);
+                                                                                
+    if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
+                                                                                
+    curl_easy_cleanup(curl_handle);
 }
 
 

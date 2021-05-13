@@ -20,7 +20,7 @@
 - [x] Add chosen vocabulary to chosen list
 - [x] Deal with arguments
 - [x] Added unit testing
-- [x] Get rid of unwanted characters in vocabulary
+- [ ] Get rid of unwanted characters in vocabulary, eg `\'`
 - [ ] Ability to scroll - display some scroll progress
 - [ ] Deal with special characters like german Umlaute
 - [ ] Info Window with key binding
@@ -33,4 +33,5 @@
 - [ ] Write unit tests
 - [ ] Test special cases
 - [ ] Problem with "wahrnehmen"
+- [ ] Problem addint "Howitz" under "Hallo"
 - [ ] Behavior, if no internet connection

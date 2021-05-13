@@ -4,6 +4,7 @@
 #include <string.h>
 #include "data_center.h"
 
+#define BUFFER_MAX 256
 
 
 // ________________________________________________________________
@@ -98,6 +99,20 @@ void vocab_print_all (void) {
             node->vocab->id,\
             node->vocab->vl,\
             node->vocab->vr);
+        node = node->next;
+    }
+}
+
+void vocabs_marked(char *list) {
+    vocab_node_t* node = init_vnode;
+    strcpy(list, "");
+    char auxiliar[BUFFER_MAX];
+    while(node != NULL) {
+        if (node->vocab->is_marked == true) {
+            if (strcmp(list, "")==0) sprintf(auxiliar, "%d", node->vocab->id);
+            else sprintf(auxiliar, "%s,%d", list, node->vocab->id);
+            strcpy(list, auxiliar);
+        }
         node = node->next;
     }
 }

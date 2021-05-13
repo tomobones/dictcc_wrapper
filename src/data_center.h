@@ -29,12 +29,12 @@ void data_clean_up(void);
 bool vocab_add(const vocab_data_t *data);
 vocab_data_t* vocab_for_nr(int nr);
 void vocab_print_all(void);
-bool vocab_exists(int id);
+void vocabs_marked(char *list);
 
 // voclist methods
 bool voclst_add(const voclst_data_t *data);
 voclst_data_t* voclst_for_nr(int nr);
 void voclst_print_all(void);
-bool voclst_exists(int id);
+
 
 #endif

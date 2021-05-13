@@ -188,7 +188,7 @@ void display_vocabs_top_number(int top_nr) {
     wrefresh(win_mark);
 
     attrset(A_NORMAL);
-    mvprintw(stdscr_y-1, 1, "Press 'q' to exit, 'j' up, 'k' down, SPACE to select, 'a' to add to a list...");
+    mvprintw(stdscr_y-1, 1, "q: exit, j: up, k: down, SPACE to select, a: to add to a list");
     refresh();
 }
 

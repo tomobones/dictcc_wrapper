@@ -65,6 +65,7 @@ void get_data_from_url(struct MemoryStruct *webdata, char *url) {
 }
 
 void open_session(char* user, char* passwd) {
+    if (user == NULL || passwd == NULL) err_exit("No valid user or password passed");
     char errbuffer[BUFFER_ERROR];
     struct MemoryStruct webdata;
     webdata.size = 0;
@@ -134,14 +135,11 @@ void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
     curl_easy_cleanup(curl_handle);
 }
 
-void add_vocabs_to_list(int* vocab_ids, int list_id) {
+void add_vocabs_to_list(char* vocab_ids, char* list_id) {
 
-    char* vocab_ids_str = "419598,802313"; //Aligator
-    //char* list_id_str = "840649";
-    char* list_id_str = "993949"; //TestEnglish
 
     char url[URL_LENGTH];
-    sprintf(url, URL_ADDLST, list_id_str, vocab_ids_str);
+    sprintf(url, URL_ADDLST, list_id, vocab_ids);
     char errbuffer[BUFFER_ERROR];
     struct MemoryStruct webdata;
     webdata.size = 0;

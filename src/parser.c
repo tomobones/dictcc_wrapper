@@ -50,14 +50,13 @@ bool parse_vocabs_from_html(char* html) {
     
     substr_pos_t pos_rltv;
     vocab_data_t vocab_to_add;
-    vocab_to_add.nr = 0;
+    vocab_to_add.nr = 1;
     vocab_to_add.is_marked = false;
 
     char aux_str[16];
     
     bool run_further = true;
     while (run_further) {
-        vocab_to_add.nr++;
         
         // retrieve id
         pos_of_match_in_html(&pos_rltv, &rx_id, html + pos_id.start);
@@ -79,12 +78,10 @@ bool parse_vocabs_from_html(char* html) {
         pos_vr.start += (pos_rltv.end + 1);
 
         // add vocab to data
-        if (vocab_to_add.id == 0) {
-            vocab_to_add.nr--;
-            continue;
-        }
+        if (vocab_to_add.id == 0 || vocab_to_add.vl[0] == '\0' || vocab_to_add.vr[0] == '\0') continue;
 
         vocab_add(&vocab_to_add);
+        vocab_to_add.nr++;
     }
         
     regfree(&rx_id);

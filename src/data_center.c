@@ -42,7 +42,6 @@ void vocab_clean_up (void);
 void voclst_clean_up (void);
 
 
-
 // ________________________________________________________________
 // public methods - implementations - general
 

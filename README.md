@@ -27,6 +27,7 @@
 - [ ] Arrow keys, Return key
 - [ ] Exit, if opening session not successful
 - [ ] Exit, if vocab lists has no entry
+- [ ] Exit, if no vocab checked
 
 ## Todo List - Tests - Status 2021-05-13
 - [ ] Write unit tests

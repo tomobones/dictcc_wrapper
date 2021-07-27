@@ -78,6 +78,7 @@ int main(int argc, char** argv) {
     }
     
     // concatenate search string
+    /* Look at using strncmp() and strncpy() here */
     char search_string[BUFFER_MAX] = "";
     for (; optind < argc; optind++) {
         if (strcmp(search_string, "") == 0) {

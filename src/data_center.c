@@ -37,10 +37,10 @@ voclst_node_t *final_lnode = NULL;
 // ________________________________________________________________
 // private methods - declarations
 
-bool vocab_exists (int id);
-bool voclst_exists (int id);
-void vocab_clean_up (void);
-void voclst_clean_up (void);
+static bool vocab_exists (int id);
+static bool voclst_exists (int id);
+static void vocab_clean_up (void);
+static void voclst_clean_up (void);
 
 
 // ________________________________________________________________
@@ -171,7 +171,7 @@ void voclst_print_all (void) {
 // ________________________________________________________________
 // private methods - implementations
 
-bool vocab_exists (int id) {
+static bool vocab_exists (int id) {
     vocab_node_t *node = init_vnode;
     while (node != NULL) {
         if (node->vocab->id == id) return true;
@@ -180,7 +180,7 @@ bool vocab_exists (int id) {
     return false;
 }
 
-bool voclst_exists (int id) {
+static bool voclst_exists (int id) {
     voclst_node_t *node = init_lnode;
     while (node != NULL) {
         if (node->voclst->id == id) return true;
@@ -189,7 +189,7 @@ bool voclst_exists (int id) {
     return false;
 }
 
-void vocab_clean_up (void) {
+static void vocab_clean_up (void) {
     vocab_node_t* node = init_vnode;
     vocab_node_t* node_next = NULL;
 
@@ -201,7 +201,7 @@ void vocab_clean_up (void) {
     }
 }
 
-void voclst_clean_up (void) {
+static void voclst_clean_up (void) {
     voclst_node_t* node = init_lnode;
     voclst_node_t* node_next = NULL;
 

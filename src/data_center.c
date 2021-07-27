@@ -61,6 +61,9 @@ bool vocab_add (const vocab_data_t *data) {
 
     // create new data
     vocab_data_t* pvocab = (vocab_data_t*)malloc(sizeof(vocab_data_t));
+    if (pvocab == NULL) {
+        // Error?
+    }
     pvocab->nr = data->nr;
     pvocab->id = data->id;
     strcpy(pvocab->vl, data->vl);
@@ -69,6 +72,9 @@ bool vocab_add (const vocab_data_t *data) {
 
     // create new node
     vocab_node_t* pnewnode = (vocab_node_t*)malloc(sizeof(vocab_node_t));
+    if (pnewnode == NULL) {
+        // Error ?
+    }
     pnewnode->next = NULL;
     pnewnode->vocab = pvocab;
 
@@ -127,6 +133,9 @@ bool voclst_add (const voclst_data_t *data) {
 
     // create new data
     voclst_data_t* pvoclst = (voclst_data_t*)malloc(sizeof(voclst_data_t));
+    if (pvoclst == NULL) {
+        // Error?
+    }
     pvoclst->nr = data->nr;
     pvoclst->id = data->id;
     strcpy(pvoclst->name, data->name);
@@ -134,6 +143,10 @@ bool voclst_add (const voclst_data_t *data) {
 
     // create new node
     voclst_node_t* pnewnode = (voclst_node_t*)malloc(sizeof(voclst_node_t));
+    if (pnewnode == NULL)
+    {
+        // Error?
+    }
     pnewnode->next = NULL;
     pnewnode->voclst = pvoclst;
 

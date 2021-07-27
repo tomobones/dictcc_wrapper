@@ -51,7 +51,6 @@ char *help_text = \
     "  \n";
 
 int main(int argc, char** argv) {
-
     // manage options
     bool option_help = false;
     bool option_lang = false;
@@ -65,8 +64,13 @@ int main(int argc, char** argv) {
                 option_help = true;
                 break;
             case 'l':
-                option_lang = true;
-                strcpy(lang_code, optarg);
+                /* Checking optarg length does not exceed buffer prior to
+                 * copying the string and setting option_lang to true
+                 */
+                if ((strlen(optarg) + 1) <= BUFFER_MAX) {
+                    strncpy(lang_code, optarg, (strlen(optarg) + 1));
+                    option_lang = true;
+                }
                 break;
             case '?':
                 err_exit("Invalid option: %c\n", optopt);

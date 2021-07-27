@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "minunit.h"
-#include "../src/data_center.h"
+#include "../include/data_center.h"
 
 int tests_run = 0;
 

@@ -82,10 +82,10 @@ int main(int argc, char** argv) {
     char search_string[BUFFER_MAX] = "";
     for (; optind < argc; optind++) {
         if (strcmp(search_string, "") == 0) {
-            strcpy(search_string, argv[optind]);
+            strncpy(search_string , argv[optind] , BUFFER_MAX - 1); //-1 For the null-terminating char :)
         } else {
-            char *aux_string = strcat(search_string, "+");
-            strcpy(search_string, strcat(aux_string, argv[optind]));
+            strncat(search_string , "+" , BUFFER_MAX - strlen(search_string) - 1 );
+            strncat(search_string , argv[optind] , BUFFER_MAX - strlen(search_string) - 1 );
         }
     }
     

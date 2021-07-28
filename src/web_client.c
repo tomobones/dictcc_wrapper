@@ -26,7 +26,7 @@
 
 #define FILE_COOKIE "/tmp/dictcc_cookie.txt"
 
-#define BUFFER_ERROR 256
+#define BUFFER_ERROR CURL_ERROR_SIZE
 
 
 // ________________________________________________________________

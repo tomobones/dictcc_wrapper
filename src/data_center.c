@@ -173,10 +173,10 @@ voclst_data_t* voclst_for_nr (int nr) {
 void voclst_print_all (void) {
     voclst_node_t* node = init_lnode;
     while (node != NULL) {
-       printf("%d %d %s\n",\
-            node->voclst->nr,\
-            node->voclst->id,\
-            node->voclst->name);
+       printf("%d %d %s\n",
+               node->voclst->nr,
+               node->voclst->id,
+               node->voclst->name);
         node = node->next;
     }
 }

@@ -13,4 +13,7 @@ void add_vocabs_to_list(char* vocabs, char* list);
 void open_session(char* user, char* passwd);
 void close_session(void);
 
+void initialize_curl_handle();
+void destroy_curl_handle();
+
 #endif

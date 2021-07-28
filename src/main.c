@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
     }
     
     // get url
-    char url[BUFFER_MAX];
+    char url[BUFFER_MAX] = "";
     url_search_and_lang(url, search_string , option_lang?lang_code:LANG_DEFAULT);
 
     // get html data

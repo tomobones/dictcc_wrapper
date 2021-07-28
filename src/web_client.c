@@ -32,28 +32,23 @@
 // ________________________________________________________________
 // private methods - declarations
 
-void get_html_from_url(char *url);
-void print_web_data(void);
 const size_t data_handler_mem(char* buffer, size_t itemsize, size_t nitems, void* ignorethis);
-const size_t data_handler_print(char* buffer, size_t itemsize, size_t nitems, void* ignorethis); 
-void parse_strings_from_html(char **ids, char **lvocabs, char **rvocabs);
-void print_str_from_to(char *string, int from, int to);
-void regex_match2string(regex_t rx, char** ptstrg);
-void extract_data_from_strings(char *ids, char *lvocabs, char *rvocabs);
 
 
 // ________________________________________________________________
 // public methods - implementations
 
 void get_data_from_url(struct MemoryStruct *webdata, char *url) {
+    if (url == NULL) err_exit("No valid URL in function 'get_data_from_url'.");
 
     char errbuffer[BUFFER_ERROR];
+
     webdata->size = 0;
     webdata->buffer = malloc(1);
-    if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'");
+    if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'.");
+
     CURL *curl_handle = curl_easy_init();
     if (!curl_handle) err_exit("Coudn't initialize curl handle.");
-
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)webdata);
@@ -65,19 +60,22 @@ void get_data_from_url(struct MemoryStruct *webdata, char *url) {
 }
 
 void open_session(char* user, char* passwd) {
-    if (user == NULL || passwd == NULL) err_exit("No valid user or password passed");
+    if (user == NULL || passwd == NULL) err_exit("No valid user or password passed.");
+
     char errbuffer[BUFFER_ERROR];
+
     struct MemoryStruct webdata;
     webdata.size = 0;
     webdata.buffer = malloc(1);
-    CURL *curl_handle = curl_easy_init();
+
     char url[URL_LENGTH];
-    char postfield[POST_LENGTH];
     sprintf(url, URL_LOGIN);
+
+    char postfield[POST_LENGTH];
     sprintf(postfield, POST_LOGIN, user, passwd);
 
+    CURL *curl_handle = curl_easy_init();
     if (!curl_handle) err_exit("Curl initialization.");                           
-                                                                                
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
     curl_easy_setopt(curl_handle, CURLOPT_POSTFIELDS, postfield);               
     curl_easy_setopt(curl_handle, CURLOPT_POST, 1L);                             
@@ -93,12 +91,13 @@ void open_session(char* user, char* passwd) {
 
 void close_session(void) {
     char errbuffer[BUFFER_ERROR];
+
     struct MemoryStruct webdata;
     webdata.size = 0;
     webdata.buffer = malloc(1);
+
     CURL *curl_handle = curl_easy_init();
     if (!curl_handle) err_exit("Coudn't initialize curl handle.");
-
     curl_easy_setopt(curl_handle, CURLOPT_URL, URL_LOGOUT);
     curl_easy_setopt(curl_handle, CURLOPT_COOKIEFILE, FILE_COOKIE);            
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
@@ -109,20 +108,22 @@ void close_session(void) {
     if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
 
     curl_easy_cleanup(curl_handle);
-
     remove(FILE_COOKIE);
 }
 
 void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
+    if (lang_code == NULL) err_exit("Language code not valid in function 'get_lists_for_lang'.");
     char errbuffer[BUFFER_ERROR];
+
     char url[URL_LENGTH];
     sprintf(url, URL_LISTS, lang_code);
+
     webdata->size = 0;
     webdata->buffer = malloc(1);
-    if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'");
+    if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'.");
+
     CURL *curl_handle = curl_easy_init();
     if (!curl_handle) err_exit("Curl initialization.");                           
-                                                                                
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)webdata);
@@ -136,7 +137,7 @@ void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
 }
 
 void add_vocabs_to_list(char* vocab_ids, char* list_id) {
-
+    if (vocab_ids == NULL || list_id == NULL) err_exit("Vocabulary ID's and List ID's not valid in function 'add_vocab_to_list'.");
 
     char url[URL_LENGTH];
     sprintf(url, URL_ADDLST, list_id, vocab_ids);
@@ -164,9 +165,9 @@ void add_vocabs_to_list(char* vocab_ids, char* list_id) {
 // private methods - implementations
 
 const size_t data_handler_mem(char* buffer, size_t itemsize, size_t nitems, void* mem_data) {
-    int nbytes = (int)itemsize * (int)nitems;
-     
     struct MemoryStruct *data = (struct MemoryStruct *) mem_data;
+    int nbytes = (int)itemsize * (int)nitems;
+
     data->buffer = realloc(data->buffer, data->size + nbytes + 1);
     if (data->buffer == NULL) err_exit("realloc() of MemoryStruct data.");
     memcpy(data->buffer + data->size, buffer, nbytes);
@@ -175,13 +176,3 @@ const size_t data_handler_mem(char* buffer, size_t itemsize, size_t nitems, void
 
     return (size_t)nbytes; 
 }
-
-const size_t data_handler_print(char* buffer, size_t itemsize, size_t nitems, void* ignorethis) 
-{                                                                               
-    int nbytes = (int)itemsize * (int)nitems;
-    for (int i = 0; i<nitems*itemsize; i++)                                     
-    {                                                                           
-        fprintf(stdout, "%c", buffer[i]);                                       
-    }                                                                           
-    return (size_t)nbytes; 
-}    

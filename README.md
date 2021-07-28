@@ -1,16 +1,20 @@
 # dict.cc terminal client
 
+
+## Functionality
+- Search for specific vocabulary on [dict.cc](https://dict.cc)
+- Save chosen entries in one of your vocabulary lists
+
 ## Dependencies
 - 'ncurses' for UI
 - 'curl' for html requests
 - 'regex' for pattern search in html data
 - [minUnit](http://www.jera.com/techinfo/jtns/jtn002.html) for minimal unit testing
 
-## Functionality
-- Search for specific vocabulary on [dict.cc](https://dict.cc)
-- Save chosen entries in one of your vocabulary lists
+## Status 2021-07-04
+- Still a bit buggy, but basic functionality is already working
 
-## Todo List - Requirements - Status 2021-05-13
+## Todo List - Requirements
 - [x] Search for vocabulary
 - [x] Parse vocabulary lists for a language
 - [x] API to add vocabulary to list
@@ -21,6 +25,7 @@
 - [x] Deal with arguments
 - [x] Added unit testing
 - [ ] Get rid of unwanted characters in vocabulary, eg `\'`
+- [ ] Problem with 'Umlaute'
 - [ ] Ability to scroll - display some scroll progress
 - [ ] Deal with special characters like german Umlaute
 - [ ] Info Window with key binding
@@ -30,7 +35,7 @@
 - [ ] Exit, if no vocab checked
 - [ ] Bug: last vocablist highlights win border
 
-## Todo List - Tests - Status 2021-05-13
+## Todo List - Tests
 - [ ] Write unit tests
 - [ ] Test special cases
 - [ ] Problem with "wahrnehmen"

@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
                     option_lang = true;
                 }
                 break;
-            case '?':
+            default: /* '?' */
                 err_exit("Invalid option: %c\n", optopt);
         }
     }

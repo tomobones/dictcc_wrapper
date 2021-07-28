@@ -9,9 +9,9 @@
 
 bool is_valid_lang_code (const char* lang) {
     if (lang[4] != '\0') return false;
-    if ((lang[0] == 'd' && lang[1] == 'e') ||\
-        (lang[0] == 'e' && lang[1] == 'n') ||\
-        (lang[2] == 'd' && lang[3] == 'e') ||\
+    if ((lang[0] == 'd' && lang[1] == 'e') ||
+        (lang[0] == 'e' && lang[1] == 'n') ||
+        (lang[2] == 'd' && lang[3] == 'e') ||
         (lang[2] == 'e' && lang[3] == 'n')) return true;
     return false;
 }

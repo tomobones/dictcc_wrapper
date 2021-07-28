@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "minunit.h"
-#include "../src/data_center.h"
+#include "../include/data_center.h"
 
 int tests_run = 0;
 
@@ -42,6 +42,9 @@ char *test_vocab_add_redundancy(void) {
 }
 
 char *test_vocab_exists(void) {
+    /* Calling private function so declaring it here. */
+    bool vocab_exists(int);
+
     int id = 234567;
     int id_not = 334567;
     mu_assert("vocab_exists: for existing id should return true", vocab_exists(id));
@@ -86,6 +89,9 @@ char *test_voclst_add_redundancy(void) {
 }
 
 char *test_voclst_exists(void) {
+    /* Calling prave function so declaring it here. */
+    bool voclst_exists(int);
+
     int id = 1999;
     int id_not = 2000;
     mu_assert("voclst_exists: for existing id should return true", voclst_exists(id));

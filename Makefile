@@ -3,6 +3,7 @@ CC_FLAGS=-g -Wall
 CC_LIBS=-lncurses -lcurl
 
 SRC_DIR=src
+HDR_DIR=include/
 OBJ_DIR=obj
 TST_DIR=test
 TBN_DIR=test/bin
@@ -22,10 +23,10 @@ BIN_FILE=dictcc
 all: $(OBJ_DIR) $(BIN_FILE) 
 
 $(BIN_FILE): $(OBJ_FILES)
-	$(CC) $(CC_FLAGS) $^ -o $@ $(CC_LIBS)
+	$(CC) $(CC_FLAGS) $^ -I$(HDR_DIR) -o $@ $(CC_LIBS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CC_FLAGS) -c $^ -o $@
+	$(CC) $(CC_FLAGS) -c $^ -I$(HDR_DIR) -o $@
 
 $(OBJ_DIR):
 	mkdir $@

@@ -1,44 +1,16 @@
-CC=gcc
-CC_FLAGS=-g -Wall
-CC_LIBS=-lncurses -lcurl
+CC = gcc
+SRC = lang_is_valid_id.c
+CFLAGS = -c -ggdb -Wall
+LFLAGS = -ggdb -Wall
 
-SRC_DIR=src
-HDR_DIR=include/
-OBJ_DIR=obj
-TST_DIR=test
-TBN_DIR=test/bin
+all: clean a.out
 
-TST_LIB=test/minunit.h
+compile: clean
+	$(CC) $(CFLAGS) $(SRC)
 
-# source and object files
-SRC_FILES=$(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES=$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
-
-# test files and their binaries
-TST_FILES=$(wildcard $(TST_DIR)/*_test.c)
-TBN_FILES=$(patsubst $(TST_DIR)/%_test.c, $(TBN_DIR)/%, $(TST_FILES))
-
-BIN_FILE=dictcc
-
-all: $(OBJ_DIR) $(BIN_FILE) 
-
-$(BIN_FILE): $(OBJ_FILES)
-	$(CC) $(CC_FLAGS) $^ -I$(HDR_DIR) -o $@ $(CC_LIBS)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CC_FLAGS) -c $^ -I$(HDR_DIR) -o $@
-
-$(OBJ_DIR):
-	mkdir $@
-
-test: $(TBN_DIR) $(OBJ_DIR) $(TBN_FILES)
-	for test in $(TBN_FILES); do ./$$test; done
-
-$(TBN_DIR)/%: $(OBJ_DIR)/%.o $(TST_DIR)/%_test.c
-	$(CC) $(CC_FLAGS) $^ $(TST_LIB) -o $@
-
-$(TBN_DIR):
-	mkdir $@
+a.out: compile
+	$(CC) $(LFLAGS) *.o
+	rm -f *.o
 
 clean:
-	rm -rf $(BIN_FILE) $(OBJ_DIR) $(TBN_DIR)
+	rm -f a.out *.o

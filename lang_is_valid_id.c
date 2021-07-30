@@ -12,7 +12,6 @@
 #define LANG_CODES "deensvisrurofritskptnlhufilaesbghrnocsdatrpleosrelbs"
 #define LANG_CODES_LEN 52
 
-
 bool is_lang_valid(const char * lang)
 {
     // Parameter check
@@ -60,7 +59,6 @@ bool is_lang_valid(const char * lang)
     fprintf(stderr, "Second language code not supported\n");
     return false;
 }
-
 
 int main(void)
 {

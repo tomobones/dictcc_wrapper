@@ -100,10 +100,10 @@ vocab_data_t* vocab_for_nr (int nr) {
 void vocab_print_all (void) {
     vocab_node_t* node = init_vnode;
     while (node != NULL) {
-       printf("%d %d %s %s\n",\
-            node->vocab->nr,\
-            node->vocab->id,\
-            node->vocab->vl,\
+       printf("%d %d %s %s\n",
+            node->vocab->nr,
+            node->vocab->id,
+            node->vocab->vl,
             node->vocab->vr);
         node = node->next;
     }
@@ -174,9 +174,9 @@ void voclst_print_all (void) {
     voclst_node_t* node = init_lnode;
     while (node != NULL) {
        printf("%d %d %s\n",
-               node->voclst->nr,
-               node->voclst->id,
-               node->voclst->name);
+            node->voclst->nr,
+            node->voclst->id,
+            node->voclst->name);
         node = node->next;
     }
 }

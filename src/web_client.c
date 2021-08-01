@@ -28,6 +28,7 @@
 
 #define BUFFER_ERROR CURL_ERROR_SIZE
 
+static CURL *curl_handle;
 
 // ________________________________________________________________
 // private methods - declarations
@@ -38,6 +39,16 @@ const size_t data_handler_mem(char* buffer, size_t itemsize, size_t nitems, void
 // ________________________________________________________________
 // public methods - implementations
 
+void initialize_curl_handle(){
+    curl_handle = curl_easy_init();
+    if (!curl_handle) err_exit("Coudn't initialize curl handle.");
+}
+
+void destroy_curl_handle(){
+    curl_easy_cleanup(curl_handle);
+    remove(FILE_COOKIE);
+}
+
 void get_data_from_url(struct MemoryStruct *webdata, char *url) {
     if (url == NULL) err_exit("No valid URL in function 'get_data_from_url'.");
 
@@ -47,16 +58,14 @@ void get_data_from_url(struct MemoryStruct *webdata, char *url) {
     webdata->buffer = malloc(1);
     if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'.");
 
-    CURL *curl_handle = curl_easy_init();
-    if (!curl_handle) err_exit("Coudn't initialize curl handle.");
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)webdata);
     curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errbuffer);
     curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);                   
+    curl_easy_setopt(curl_handle, CURLOPT_FAILONERROR, 1L);                 //Treat status codes above 400 as errors
 
     if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
-    curl_easy_cleanup(curl_handle);
 }
 
 void open_session(char* user, char* passwd) {
@@ -73,9 +82,7 @@ void open_session(char* user, char* passwd) {
 
     char postfield[POST_LENGTH];
     sprintf(postfield, POST_LOGIN, user, passwd);
-
-    CURL *curl_handle = curl_easy_init();
-    if (!curl_handle) err_exit("Curl initialization.");                           
+                         
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
     curl_easy_setopt(curl_handle, CURLOPT_POSTFIELDS, postfield);               
     curl_easy_setopt(curl_handle, CURLOPT_POST, 1L);                             
@@ -84,9 +91,9 @@ void open_session(char* user, char* passwd) {
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)(&webdata));
     curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);                   
     curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errbuffer);
+    curl_easy_setopt(curl_handle, CURLOPT_FAILONERROR, 1L);                 //Treat status codes above 400 as errors
                                                                                 
     if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
-    curl_easy_cleanup(curl_handle);
 }
 
 void close_session(void) {
@@ -95,9 +102,7 @@ void close_session(void) {
     struct MemoryStruct webdata;
     webdata.size = 0;
     webdata.buffer = malloc(1);
-
-    CURL *curl_handle = curl_easy_init();
-    if (!curl_handle) err_exit("Coudn't initialize curl handle.");
+    
     curl_easy_setopt(curl_handle, CURLOPT_URL, URL_LOGOUT);
     curl_easy_setopt(curl_handle, CURLOPT_COOKIEFILE, FILE_COOKIE);            
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
@@ -106,9 +111,6 @@ void close_session(void) {
     curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1L);                   
 
     if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
-
-    curl_easy_cleanup(curl_handle);
-    remove(FILE_COOKIE);
 }
 
 void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
@@ -121,9 +123,7 @@ void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
     webdata->size = 0;
     webdata->buffer = malloc(1);
     if (webdata->buffer == NULL) err_exit("Couldn't alloc var 'data.buffer' in 'web_client.c'.");
-
-    CURL *curl_handle = curl_easy_init();
-    if (!curl_handle) err_exit("Curl initialization.");                           
+                         
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)webdata);
@@ -132,8 +132,6 @@ void get_lists_for_lang (struct MemoryStruct *webdata, char *lang_code) {
     curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errbuffer);
                                                                                 
     if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
-                                                                                
-    curl_easy_cleanup(curl_handle);
 }
 
 void add_vocabs_to_list(char* vocab_ids, char* list_id) {
@@ -144,10 +142,8 @@ void add_vocabs_to_list(char* vocab_ids, char* list_id) {
     char errbuffer[BUFFER_ERROR];
     struct MemoryStruct webdata;
     webdata.size = 0;
-    webdata.buffer = malloc(1);
-    CURL *curl_handle = curl_easy_init();
-    if (!curl_handle) err_exit("Curl initialization.");                           
-                                                                                
+    webdata.buffer = malloc(1);                         
+    
     curl_easy_setopt(curl_handle, CURLOPT_URL, url);                            
     curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, data_handler_mem);
     curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void*)(&webdata));
@@ -156,8 +152,6 @@ void add_vocabs_to_list(char* vocab_ids, char* list_id) {
     curl_easy_setopt(curl_handle, CURLOPT_ERRORBUFFER, errbuffer);
                                                                                 
     if (curl_easy_perform(curl_handle) != CURLE_OK) err_exit(errbuffer);
-                                                                                
-    curl_easy_cleanup(curl_handle);
 }
 
 

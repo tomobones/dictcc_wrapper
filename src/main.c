@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
+#include <getopt.h>
+#include <curl/curl.h>
 
 #include "data_center.h"
 #include "url_manager.h"
@@ -51,6 +53,11 @@ char *help_text = \
     "  \n";
 
 int main(int argc, char** argv) {
+    
+    //Initialize libcurl and a curl_handle
+    curl_global_init(CURL_GLOBAL_ALL);
+    initialize_curl_handle();
+
     // manage options
     bool option_help = false;
     bool option_lang = false;
@@ -81,6 +88,7 @@ int main(int argc, char** argv) {
     /* Look at using strncmp() and strncpy() here */
     char search_string[BUFFER_MAX] = "";
     for (; optind < argc; optind++) {
+        //Add the first word to the search string
         if (strcmp(search_string, "") == 0) {
             strncpy(search_string , argv[optind] , BUFFER_MAX - 1); //-1 For the null-terminating char :)
         } else {
@@ -142,6 +150,8 @@ int main(int argc, char** argv) {
     cleanup_ui();
     data_clean_up();
     free(memory.buffer);
+    destroy_curl_handle();
+    curl_global_cleanup();
 
     return EXIT_SUCCESS;
 }

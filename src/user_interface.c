@@ -33,8 +33,8 @@ static int voclst_number = 0;
 // ________________________________________________________________
 // private methods - declarations
 
-void display_vocabs_top_number(int top_number);
-void display_voclists_top_number(int top_number);
+static void display_vocabs_top_number(int top_number);
+static void display_voclists_top_number(int top_number);
 
 
 // ________________________________________________________________
@@ -145,9 +145,9 @@ void cleanup_ui(void) {
 
 
 // ________________________________________________________________
-// public methods - implementations - vocabs
+// private methods - implementations - vocabs
 
-void display_vocabs_top_number(int top_nr) {
+static void display_vocabs_top_number(int top_nr) {
     top_number = top_nr;
     
     int counter = 0;
@@ -192,7 +192,7 @@ void display_vocabs_top_number(int top_nr) {
     refresh();
 }
 
-void display_voclists_top_number(int top_number) {
+static void display_voclists_top_number(int top_number) {
     int counter = 0;
     voclst_data_t *voclst = voclst_for_nr(counter + top_number);
     wclear(win_lists);

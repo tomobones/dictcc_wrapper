@@ -41,14 +41,16 @@ char *test_vocab_add_redundancy(void) {
     return 0;
 }
 
+extern bool (*fp_vocab_exists)(int);
 char *test_vocab_exists(void) {
     /* Calling private function so declaring it here. */
-    bool vocab_exists(int);
 
     int id = 234567;
     int id_not = 334567;
-    mu_assert("vocab_exists: for existing id should return true", vocab_exists(id));
-    mu_assert("vocab_exists: for nonexisting id should return false", !vocab_exists(id_not));
+    mu_assert("vocab_exists: for existing id should return true",
+              (fp_vocab_exists)(id));
+    mu_assert("vocab_exists: for nonexisting id should return false", 
+              !(fp_vocab_exists)(id_not));
 
     return 0;
 }
@@ -61,6 +63,7 @@ char *test_vocab_for_nr() {
 
     return 0;
 }
+
 
 char *test_voclst_add(void) {
     voclst_data_t lstdata1; 
@@ -88,14 +91,18 @@ char *test_voclst_add_redundancy(void) {
     return 0;
 }
 
+extern bool (*fp_voclst_exists)(int);
+
 char *test_voclst_exists(void) {
     /* Calling prave function so declaring it here. */
-    bool voclst_exists(int);
+ //   bool voclst_exists(int);
 
     int id = 1999;
     int id_not = 2000;
-    mu_assert("voclst_exists: for existing id should return true", voclst_exists(id));
-    mu_assert("voclst_exists: for nonexisting id should return false", !voclst_exists(id_not));
+    mu_assert("voclst_exists: for existing id should return true",
+              (fp_voclst_exists)(id));
+    mu_assert("voclst_exists: for nonexisting id should return false",
+              !(fp_voclst_exists)(id_not));
 
     return 0;
 }

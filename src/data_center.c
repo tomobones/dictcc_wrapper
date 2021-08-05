@@ -194,6 +194,7 @@ static bool vocab_exists (int id) {
 }
 
 #ifdef TEST_DATA_CENTER
+// Create a function pointer which can be used in unit testing
 bool(*fp_vocab_exists)(int) = &vocab_exists;
 #endif
 
@@ -207,6 +208,7 @@ static bool voclst_exists (int id) {
 }
 
 #ifdef TEST_DATA_CENTER
+// Create a function pointer which can be used in unit testing
 bool(*fp_voclst_exists)(int) = &voclst_exists;
 #endif
 

@@ -52,8 +52,6 @@ char *test_vocab_add_redundancy(void) {
 }
 
 char *test_vocab_exists(void) {
-    /* Calling private function so declaring it here. */
-
     int id = 234567;
     int id_not = 334567;
     mu_assert("vocab_exists: for existing id should return true",

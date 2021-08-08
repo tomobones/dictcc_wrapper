@@ -37,6 +37,12 @@ test: $(TBN_DIR) $(OBJ_DIR) $(TBN_FILES)
 $(TBN_DIR)/%: $(OBJ_DIR)/%.o $(TST_DIR)/%_test.c
 	$(CC) $(CC_FLAGS) $^ $(TST_LIB) -o $@
 
+# TODO Could not get it to work with wildcards
+test_data_center: $(TBN_DIR)
+	$(CC) $(CC_FLAGS) -DTEST_DATA_CENTER src/data_center.c \
+		test/data_center_test.c -I$(HDR_DIR) -o $(TBN_DIR)/$@
+	./test/bin/$@
+
 $(TBN_DIR):
 	mkdir $@
 
